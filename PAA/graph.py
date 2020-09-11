@@ -5,11 +5,16 @@ class Graph(object):
 		self.nodes = {}
 		self.count = 0
 
-	def build_graph(self, tuples):
-		for t in tuples:
-			self.add_node(t[0], t[1:])
+	def build_graph(self, vertices, tuples):
+		for v in vertices:
+			self.nodes.update({ self.count : Node(v) })
+			self.count = self.count + 1
 
-	def add_node(self, content, neighbors):
+		for t in tuples:
+			if len(t) == 2 : self.add_node(t[0], [t[1]], [0])
+			elif len(t) == 3: self.add_node(t[0], [t[1]], [t[2]])
+
+	def add_node(self, content, neighbors, costs):
 		node_id_ref = self.exist_node(content)
 		
 		new_node = None
@@ -19,21 +24,18 @@ class Graph(object):
 		if node_id_ref != None: new_node = self.nodes[node_id_ref]
 		else: new_node = Node(content)
 
-		for x in neighbors:
-			node_id = self.exist_node(x)
+		for x in range(0, len(neighbors)):
+			node_id = self.exist_node(neighbors[x])
 			
 			if node_id != None: 
-				new_node.add_neighbor(node_id)
+				new_node.add_neighbor(node_id, costs[x])
 				self.nodes[node_id].add_incident(new_id)
-			elif x != content:
-				new = Node(x) 
-				self.nodes.update({ self.count : new })
-				new_node.add_neighbor(self.count)
-				self.nodes[self.count].add_incident(new_id)
-				self.count = self.count + 1
 		
 		if node_id_ref == None: 
 			self.nodes.update({ new_id : new_node })
+
+	def delete_node(self, key):
+		del self.nodes[key]
 
 	def exist_node(self, content):
 		for node_id in self.nodes:

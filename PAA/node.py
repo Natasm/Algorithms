@@ -1,18 +1,18 @@
 class Node(object):
 	def __init__(self, content):
 		self.content = content
-		self.incidents = []
-		self.neighbors = []
+		self.incidents = {}
+		self.neighbors = {}
 		self.in_degree = 0
 		self.out_degree = 0
 		self.sort = 0
 
-	def add_neighbor(self, neighbor):
-		self.neighbors.append(neighbor)
+	def add_neighbor(self, neighbor, cost):
+		self.neighbors.update({ neighbor: cost })
 		self.out_degree = self.out_degree + 1
 
 	def add_incident(self, incident):
-		self.incidents.append(incident)
+		self.incidents.update({ incident: 0 })
 		self.in_degree = self.in_degree + 1
 
 	def insert_sort(self, sort):
