@@ -16,13 +16,13 @@ def coins(M, n):
           if dp[i - M[j]] + 1 < dp[i]: 
               dp[i] = dp[i - M[j]] + 1;
               s[i] = M[j];
-
-    if dp[n] > len(M):
-      printf("Valor excedido!");
-      return;
-    else: 
-       while(n != 0):
+    
+    solution = []
+    while(n != 0):
           print('1 moeda de ', s[n])
+          solution.append(s[n])
           n = n - s[n]
 
-coins([1,4,6], 8)
+    return solution
+
+print(coins([1, 2,5,10,20,50,100,200], 2195))

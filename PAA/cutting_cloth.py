@@ -8,7 +8,7 @@ def cutting_cloth(X, Y, a, b, p):
 		for j in range(1, Y + 1):
 			S[i][j] = []
 			for k in range(0, len(p)):
-				if (a[k] <= i and b[k] <= j) and (p[k] > C[i][j]): 
+				if ((a[k] <= i and b[k] <= j) or (b[k] <= i and a[k] <= j)) and (p[k] > C[i][j]): 
 						C[i][j] = p[k]
 						S[i][j] = [k]
 			for k in range(1, i):
@@ -19,18 +19,20 @@ def cutting_cloth(X, Y, a, b, p):
 				if (C[i][k] + C[i][j - k]) > C[i][j]:
 					C[i][j] = C[i][k] + C[i][j - k]
 					S[i][j] = S[i][k] + S[i][j - k]
-	
+
 	solution = []
 	for i in S[X][Y]:
 		solution.append(i)
 
 	return C[X][Y], solution
 
-#print(cutting_cloth(5,6,[3,2], [2,1], [5,1]))
+print(cutting_cloth(20,20, [2,15,15], [2,15,5],[5,400,90]))
 
-#print(cutting_cloth(9,10, [2,3,3,5], [3,2,5,3], [50,50,100,100]))
-#print(cutting_cloth(5,6,[1,1,2,2],[1,2,1,2], [1,3,2,3]))
-#print(cutting_cloth(5,6,[1,1,2,2],[1,2,1,2], [3,4,3,6]))
+print(cutting_cloth(5,6,[3,2], [2,1], [5,1]))
+
+print(cutting_cloth(9,10, [2,3,3,5], [3,2,5,3], [50,50,100,100]))
+print(cutting_cloth(5,6,[1,1,2,2],[1,2,1,2], [1,3,2,3]))
+print(cutting_cloth(5,6,[1,1,2,2],[1,2,1,2], [3,4,3,6]))
 
 print(cutting_cloth(15,10,[8,3,8,3,3,3,2],[4,7,2,4,3,2,1], [66,35,24,17,11,8,2]))
 
