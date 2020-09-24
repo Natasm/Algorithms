@@ -25,4 +25,5 @@ def coins(M, n):
 
     return solution
 
-print(coins([1, 2,5,10,20,50,100,200], 2195))
+#print(coins([1, 2,5,10,20,50,100,200], 2195))
+print(coins([1,5,10,25], 163))
