@@ -17,22 +17,40 @@ def knapsack_fractionary(W, k, v):
 
 def knapsack_no_repeat(W, k, v):
 
-	p = MixedIntegerLinearProgram()
+	p = MixedIntegerLinearProgram(maximization=True)
 	x = p.new_variable(real=False, nonnegative=True)
 	
 	p.set_objective(p.sum(x[i]*v[i] for i in range(len(v))))
 
-	p.add_constraint(p.sum(x[i]*k[i] for i in range(len(v))) <= W)
+	p.add_constraint(p.sum(x[i]*k[i] for i in range(len(k))) <= W)
 
-	for i in range(len(v)):
-		p.add_constraint(x[i] <= 1)
-
-	for i in range(len(v)):
-		p.add_constraint(x[i] >= 0)
-
-	p.add_constraint(p.sum(x[i] for i in range(len(v))) <= len(k))
+	p.set_binary(x)
 
 	print(round(p.solve(), 2))
+
+def knapsack_with_file(filepath):
+	file = open(filepath, 'r')
+    
+	W = 0
+	k = []
+	v = []
+
+	for line in file:
+		line_first = line.replace("\n", "").split(' ')
+		W = int(line_first[1])
+		break
+    
+	for line in file:
+		line_subseq = line.replace("\n", "").split(' ')
+		v.append(int(line_subseq[0]))
+		k.append(int(line_subseq[1]))
+
+	print(W)
+	print(k)
+	print(v)
+
+	knapsack_no_repeat(W, k, v)
+
 
 #Ver o tempo de execução => time a = knapsack_no_repeat(W,k,v)
 

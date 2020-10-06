@@ -12,4 +12,5 @@ def coins_greedy(coins, n):
 			i = i + 1
 	return s
 
-print(coins_greedy([1,5,10,25,100], 30)) 
+#print(coins_greedy([1,5,10,25,100], 30)) 
+print(coins_greedy([1,4,6], 8))
