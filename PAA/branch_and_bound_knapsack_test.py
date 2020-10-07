@@ -17,12 +17,16 @@ class Stack(object):
 
 class Problem(object):
 
-	def __init__(self, W=None, k=None, v=None):
+	def __init__(self, W=None, k=None, v=None, constraints=[]):
 		self.value_solution = None
 		self.variables = []
+		self.constraints = []
 		self.W = W
 		self.k = k
 		self.v = v
+
+		for i in constraints:
+			self.constraints.append(i)
 
 	def resolve(self, var_index=None, inequality=None, value=None):
 		p = MixedIntegerLinearProgram()
@@ -38,7 +42,13 @@ class Problem(object):
 		for i in range(len(self.v)):
 			p.add_constraint(x[i] >= 0)
 
-		if inequality == '==': p.add_constraint(x[var_index] == value)
+		for i in range(len(self.constraints)):
+			variable_constraint, equality, value_constraint = self.constraints[i]
+			p.add_constraint(x[variable_constraint] == value_constraint)
+
+		if inequality == '==':	
+			p.add_constraint(x[var_index] == value)
+			self.constraints.append((var_index, "==", value))
 		
 		try:
 			value_solution = round(p.solve(), 2)
@@ -53,8 +63,8 @@ class Problem(object):
 			return[value_solution, variables]
 		
 		except:
-		 	print("Solver failed: :(")
-		 	return None
+			return None
+		 	#print("Solver failed: :(")
 
 def existFractionary(array):
 	for element in array:
@@ -79,8 +89,6 @@ def branch_and_bound(W=None, k=None, v=None):
 	problem.resolve()
 	stack.add_stack(problem)
 
-	print(problem.value_solution, problem.variables)
-
 	while(not stack.isEmpty()):
 
 		problem_stack = stack.pop_stack()
@@ -98,13 +106,11 @@ def branch_and_bound(W=None, k=None, v=None):
 		for j in range(len(problem_stack.variables)):
 			f, i = math.modf(problem_stack.variables[j])
 			if f != 0: 
-				problem_new_less_than = Problem(W, k, v)
-				problem_new_less_than.resolve(var_index=j, inequality="==", value=math.floor(problem_stack.variables[j]))
-				print(problem_new_less_than.value_solution, problem_new_less_than.variables)
+				problem_new_less_than = Problem(W, k, v, problem_stack.constraints)
+				problem_new_less_than.resolve(var_index=j, inequality="==", value=0)
 
-				problem_new_bigger_then = Problem(W, k, v)
-				problem_new_bigger_then.resolve(var_index=j, inequality="==",value=math.ceil(problem_stack.variables[j]))
-				print(problem_new_bigger_then.value_solution, problem_new_bigger_then.variables)
+				problem_new_bigger_then = Problem(W, k, v, problem_stack.constraints)
+				problem_new_bigger_then.resolve(var_index=j, inequality="==", value=1)
 
 				stack.add_stack(problem_new_bigger_then)
 				stack.add_stack(problem_new_less_than)
@@ -117,8 +123,12 @@ def branch_and_bound(W=None, k=None, v=None):
 #print(branch_and_bound(50, [10,20,30], [60,100,120]))
 
 #a = Problem(10, [2,3.14,1.98,5,3], [40,50,100,95,30])
-#print(a.resolve(4, "==", 1))
-print(branch_and_bound(10, [2,3.14,1.98,5,3], [40,50,100,95,30]))
+#print(a.resolve())
+#print(branch_and_bound(10, [2,3.14,1.98,5,3], [40,50,100,95,30]))
+
+#a = Problem(15, [10,8,6,5], [24,17,12,6])
+#print(a.resolve(), '\n\n')
+#print(branch_and_bound(15, [10,8,6,5], [24,17,12,6]))
 
 
 
