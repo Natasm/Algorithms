@@ -36,7 +36,7 @@ class Problem(object):
 
 	def resolve(self, var_index=None, inequality=None, value=None):
 		p = MixedIntegerLinearProgram()
-		x = p.new_variable(real=True, nonnegative=True)
+		x = p.new_variable(integer=True, nonnegative=True)
 
 		p.set_objective(p.sum(x[i]*self.v[i] for i in range(len(self.v))))
 
@@ -191,8 +191,8 @@ a = Problem(W,k,v)
 #print(W)
 #print(k)
 #print(v)
-#print(a.resolve())
-print(branch_and_bound(W,k,v))
+print(a.resolve())
+#print(branch_and_bound(W,k,v))
 
 
 
