@@ -28,6 +28,18 @@ def knapsack_no_repeat(W, k, v):
 
 	print(round(p.solve(), 2))
 
+def knapsack_with_repeat(W, k, v):
+
+	p = MixedIntegerLinearProgram(maximization=True)
+	x = p.new_variable(integer=True, nonnegative=True)
+	
+	p.set_objective(p.sum(x[i]*v[i] for i in range(len(v))))
+
+	p.add_constraint(p.sum(x[i]*k[i] for i in range(len(k))) <= W)
+
+	print(round(p.solve(), 2))
+	print(p.get_values(x))
+
 def knapsack_with_file(filepath):
 	file = open(filepath, 'r')
     
@@ -42,14 +54,16 @@ def knapsack_with_file(filepath):
     
 	for line in file:
 		line_subseq = line.replace("\n", "").split(' ')
-		v.append(int(line_subseq[0]))
-		k.append(int(line_subseq[1]))
+		k.append(int(line_subseq[0]))
+		v.append(int(line_subseq[1]))
 
 	print(W)
 	print(k)
 	print(v)
 
-	knapsack_no_repeat(W, k, v)
+	knapsack_with_repeat(W, k, v)
+
+knapsack_with_file("C:/Users/natandemorais/Downloads/instances KP/large_scale/natan.txt")
 
 
 #Ver o tempo de execução => time a = knapsack_no_repeat(W,k,v)

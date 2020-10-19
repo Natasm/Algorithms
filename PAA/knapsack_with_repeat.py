@@ -17,7 +17,6 @@ def knapsack_with_repeat(W, p, v):
 		solution.append(S[N])
 		N = N - p[S[N]]
 
-    
 	return K[W], solution
 
 print(knapsack_with_repeat(8, [1,3,4,5], [10,40,50,70])) 
