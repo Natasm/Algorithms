@@ -84,7 +84,7 @@ def branch_and_bound_knapsack(capacity, weights, profits):
 
 		if Node.capacity[0] >= 0 and Node.capacity[1] >= 0 and Node.capacity[2] >= 0:
 			Node.objective = root.objective + profits[Node.id]
-			Node.variables = root.variables
+			Node.variables = list(root.variables)
 			Node.variables[Node.id] = 1
 			Node.relaxation = bound(Node, weights, profits, profit_per_weight)
 			stack.add_stack(Node)

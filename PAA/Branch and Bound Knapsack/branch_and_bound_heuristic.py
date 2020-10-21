@@ -65,7 +65,7 @@ def branch_and_bound_knapsack(capacity, weights, profits):
 
 		if Node.capacity >= 0:
 			Node.objective = root.objective + profits[Node.id]
-			Node.variables = root.variables
+			Node.variables = list(root.variables)
 			Node.variables[Node.id] = 1
 			Node.relaxation = bound(Node, weights, profits, profit_per_weight)
 			stack.add_stack(Node)
@@ -106,5 +106,9 @@ def knapsack_with_file(filepath):
 	return (W, k, v)
 
 capacity, weights, profits = knapsack_with_file("C:/Users/natandemorais/Desktop/knapsack/data/knapPI_1_2000_1000_1")
-print(branch_and_bound_knapsack(capacity, weights, profits))
+result = branch_and_bound_knapsack(capacity, weights, profits)
+print(result[0], result[1])
+
+ 
+
 
