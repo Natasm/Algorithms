@@ -105,8 +105,19 @@ def knapsack_with_file(filepath):
 
 	return (W, k, v)
 
-capacity, weights, profits = knapsack_with_file("C:/Users/natandemorais/Desktop/knapsack/data/knapPI_1_2000_1000_1")
-result = branch_and_bound_knapsack(capacity, weights, profits)
+#capacity, weights, profits = knapsack_with_file("C:/Users/natandemorais/Desktop/knapsack/data/knapPI_1_2000_1000_1")
+capacity = [52,52,104]
+profits =  [60, 3456, 880, 1950, 924, 143, 4000, 5000, 1890, 247, 697, 1176, 2880, 3440, 1530, 2325, 1296, 3948, 324, 1000]
+weights =  [[30, 48, 36, 50, 22, 11, 38, 38, 3, 19, 41, 21, 20, 40, 34, 31, 4, 47, 27, 50],
+			  [1, 36, 40, 39, 14, 13, 21, 4, 3, 13, 17, 28, 48, 43, 15, 25, 27, 28, 12, 20],
+			  [19, 35, 41, 39, 50, 49, 46, 2, 21, 6, 31, 45, 4, 39, 14, 39, 25, 47, 40, 19]]
+result = branch_and_bound_knapsack(capacity[0], weights[0], profits)
+print(result[0], result[1])
+
+result = branch_and_bound_knapsack(capacity[1], weights[1], profits)
+print(result[0], result[1])
+
+result = branch_and_bound_knapsack(capacity[2], weights[2], profits)
 print(result[0], result[1])
 
  
