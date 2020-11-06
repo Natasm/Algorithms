@@ -246,7 +246,7 @@ weights =  [[30, 48, 36, 50, 22, 11, 38, 38, 3, 19, 41, 21, 20, 40, 34, 31, 4, 4
 			  [1, 36, 40, 39, 14, 13, 21, 4, 3, 13, 17, 28, 48, 43, 15, 25, 27, 28, 12, 20],
 			  [19, 35, 41, 39, 50, 49, 46, 2, 21, 6, 31, 45, 4, 39, 14, 39, 25, 47, 40, 19]]
 
-capacity, weights, profits = knapsack_with_file('C:/Users/natandemorais/Desktop/key/media2', 3)
+capacity, weights, profits = knapsack_with_file('C:/Users/natandemorais/Desktop/key/facil4', 3)
 a = Problem(capacity,weights,profits)
 #print(W)
 #print(k)

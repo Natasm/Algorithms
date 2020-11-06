@@ -14,8 +14,11 @@ class Stack(object):
 
 	def pop_stack(self, level):
 		if not self.isEmpty():
-			self.date.sort(key=lambda element:element.value_solution, reverse=True)
-			return self.date.pop(0)
+			#self.date.sort(key=lambda element:element.value_solution, reverse=True)
+			#element = self.date.pop(0)
+			#self.date = []
+			#return element
+			return self.date.pop(-1)
 		else: return None
 
 	def get_size(self):
@@ -173,13 +176,13 @@ def branch_and_bound(W=None, k=None, v=None):
 					j = var
 				else:
 					lower, upper = min_interval
-					if lower < dif_floor or upper < dif_ceil: 
+					if lower > dif_floor or upper > dif_ceil: 
 						min_interval = (dif_floor, dif_ceil)
 						j = var
 
 		if j == -1: continue
-		
-		for f in range(1):
+
+		for t in range(1):
 
 				# LEFT resolve - Upper bound
 				problem_left = Problem(c, A, b)
@@ -219,11 +222,11 @@ def branch_and_bound(W=None, k=None, v=None):
 						solution = relaxation
 						solution_variables = NEW_VARIABLES
 
-				if problem_left.value_solution != None and problem_left.value_solution >= relaxation:
-					stack.add_stack(problem_left)
-
 				if problem_right.value_solution != None and problem_right.value_solution >= relaxation:
 					stack.add_stack(problem_right)
+
+				if problem_left.value_solution != None and problem_left.value_solution >= relaxation:
+					stack.add_stack(problem_left)
 
 				break
 
@@ -278,7 +281,7 @@ weights =  [[30, 48, 36, 50, 22, 11, 38, 38, 3, 19, 41, 21, 20, 40, 34, 31, 4, 4
 			  [1, 36, 40, 39, 14, 13, 21, 4, 3, 13, 17, 28, 48, 43, 15, 25, 27, 28, 12, 20],
 			  [19, 35, 41, 39, 50, 49, 46, 2, 21, 6, 31, 45, 4, 39, 14, 39, 25, 47, 40, 19]]
 
-capacity, weights, profits = knapsack_with_file('C:/Users/natandemorais/Desktop/key/media3', 3)
+capacity, weights, profits = knapsack_with_file('C:/Users/natandemorais/Desktop/key/facil4', 3)
 
 #a = ProblemInteger(capacity, weights, profits)
 #print(a.resolve())
